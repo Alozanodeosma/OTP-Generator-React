@@ -16,9 +16,13 @@ function App() {
   const [password, setPassword]=useState(`Click 'Generate OTP' to get a one-time password`);
   const [isClicked, setIsClicked] = useState(false);
 
-  function createOTP(num){
-    return parseInt(Math.random()*10**num);
-  }
+ function createOTP(digits) {
+  const array = new Uint32Array(1);
+  crypto.getRandomValues(array);      
+  return (array[0] % 10 ** digits)
+    .toString()
+    .padStart(digits, '0');
+}
 
   const generateOTP = ()=>{
     setPassword(createOTP(6));
